@@ -17,9 +17,9 @@ add_executable(History ${SOURCE_DIR}/History.cpp)
 target_link_libraries(History tws_cpp_api Threads::Threads)
 target_compile_options(History PRIVATE -Wall)
 
-add_executable(Bars ${SOURCE_DIR}/Bars.cpp)
-target_link_libraries(Bars tws_cpp_api Threads::Threads)
-target_compile_options(Bars PRIVATE -Wall)
+add_executable(Scanner ${SOURCE_DIR}/Scanner.cpp)
+target_link_libraries(Scanner tws_cpp_api Threads::Threads)
+target_compile_options(Scanner PRIVATE -Wall)
 
 add_executable(Clients ${SOURCE_DIR}/Clients.cpp)
 target_link_libraries(Clients tws_cpp_api Threads::Threads)

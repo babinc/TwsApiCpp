@@ -11,6 +11,9 @@ Test: ../Src/Test.cpp ../../Api/libTwsApiL0D.a
 History: ../Src/History.cpp ../../Api/libTwsApiL0D.a
 	$(CC) $(INCLUDE) $(CFLAGS) ../Src/History.cpp $(LIBS) -o ./debug/History
 
+Scanner: ../Src/Scanner.cpp ../../Api/libTwsApiL0D.a
+	$(CC) $(INCLUDE) $(CFLAGS) ../Src/Scanner.cpp $(LIBS) -o ./debug/Scanner
+
 Bars: ../Src/Bars.cpp ../../Api/libTwsApiL0D.a
 	$(CC) $(INCLUDE) $(CFLAGS) ../Src/Bars.cpp    $(LIBS) -o ./debug/Bars
 

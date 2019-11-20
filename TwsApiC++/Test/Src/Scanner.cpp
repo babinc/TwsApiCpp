@@ -16,52 +16,53 @@ class MyEWrapper: public EWrapperL0
 {
 public:
 
-    MyEWrapper( bool CalledFromThread = true ) : EWrapperL0( CalledFromThread ) {}
+    explicit MyEWrapper( bool CalledFromThread = true ) : EWrapperL0( CalledFromThread ) {}
 
-    virtual void winError( const IBString& str, int lastError )
+    void winError( const IBString& str, int lastError ) override
     {
         fprintf( stderr, "WinError: %d = %s\n", lastError, (const char*)str );
         ErrorForRequest = true;
     }
 
-    virtual void error( const int id, const int errorCode, const IBString errorString )
+    void error( const int id, const int errorCode, const IBString errorString ) override
     {
-        fprintf( stderr, "Error for id=%d: %d = %s\n", id, errorCode, (const char*)errorString );
+        if (id != -1) {
+            fprintf( stderr, "Error for id=%d: %d = %s\n", id, errorCode, (const char*)errorString );
+        }
         ErrorForRequest = (id > 0);
-        // id == -1 are 'system' messages, not for user requests
-        // as a test, set year to 2010 in the reqHistoricalData
     }
 
-    virtual void scannerDataEnd(int reqId)
+    void scannerDataEnd(int reqId) override
     {
         EndOfScannerData = true;
     }
 
-    virtual void scannerData( int reqId, int rank, const ContractDetails &contractDetails, const IBString &distance, const IBString &benchmark, const IBString &projection, const IBString &legsStr)
+    void scannerData( int reqId, int rank, const ContractDetails &contractDetails, const IBString &distance, const IBString &benchmark, const IBString &projection, const IBString &legsStr) override
     {
         fprintf( stdout, "%d, %s, %s, %s, %s, \n", rank, contractDetails.summary.symbol.c_str(), contractDetails.summary.secType.c_str(), contractDetails.summary.currency.c_str(), distance.c_str());
     }
 };
 
-int main( void )
+int main( )
 {
-    MyEWrapper	MW( false );	// no thread
-    EClientL0*	EC = EClientL0::New( &MW );
+    MyEWrapper MW(false);	// no thread
+    EClientL0* EC = EClientL0::New(&MW);
 
     auto clientVersion = EC->clientVersion();
     printf("Version: %d\n", clientVersion);
 
-    if( EC->eConnect( "", 7497, 100 ) )
+    if( EC->eConnect("", 7497, 100))
     {
         ScannerSubscription scanSub;
         scanSub.instrument = "STK";
-        scanSub.locationCode = "STK.US.MAJOR";
+        scanSub.locationCode = "STK.US";
         scanSub.scanCode = "TOP_PERC_GAIN";
-//        scanSub.belowPrice = 15.0;
-//        scanSub.abovePrice = 0.5;
-//        scanSub.marketCapAbove = 10000000.0;
-//        scanSub.marketCapBelow = 500000000.0;
-//        scanSub.aboveVolume = 100000.0;
+        scanSub.numberOfRows = 5;
+        scanSub.belowPrice = 15.0;
+        scanSub.abovePrice = 0.5;
+        scanSub.marketCapAbove = 10000000.0;
+        scanSub.marketCapBelow = 500000000.0;
+        scanSub.aboveVolume = 100000.0;
 
         EC->reqScannerSubscription(100, scanSub);
 

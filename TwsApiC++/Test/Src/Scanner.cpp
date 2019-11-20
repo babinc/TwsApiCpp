@@ -4,6 +4,7 @@
 
 #include "TwsApiL0.h"
 #include "TwsApiDefs.h"
+
 using namespace TwsApi;
 
 bool EndOfScannerData	= false;
@@ -39,7 +40,22 @@ public:
 
     void scannerData( int reqId, int rank, const ContractDetails &contractDetails, const IBString &distance, const IBString &benchmark, const IBString &projection, const IBString &legsStr) override
     {
-        fprintf( stdout, "%d, %s, %s, %s, %s, \n", rank, contractDetails.summary.symbol.c_str(), contractDetails.summary.secType.c_str(), contractDetails.summary.currency.c_str(), distance.c_str());
+        fprintf( stdout, "%d, %s \n", rank, contractDetails.summary.symbol.c_str());
+    }
+
+    void managedAccounts(const IBString& accountsList ) override
+    {
+//        fprintf( stdout, "%s", accountsList.c_str());
+    }
+
+    void nextValidId( OrderId orderId ) override
+    {
+//        PrintProcessId,printf( "nextValidId = %ld\n", orderId );
+    }
+
+    virtual void connectionClosed()
+    {
+//        PrintProcessId,printf( "Connection Closed\n");
     }
 };
 
@@ -47,9 +63,6 @@ int main( )
 {
     MyEWrapper MW(false);	// no thread
     EClientL0* EC = EClientL0::New(&MW);
-
-    auto clientVersion = EC->clientVersion();
-    printf("Version: %d\n", clientVersion);
 
     if( EC->eConnect("", 7497, 100))
     {

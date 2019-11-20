@@ -53,7 +53,7 @@ public:
 //        PrintProcessId,printf( "nextValidId = %ld\n", orderId );
     }
 
-    virtual void connectionClosed()
+    void connectionClosed() override
     {
 //        PrintProcessId,printf( "Connection Closed\n");
     }
@@ -68,7 +68,7 @@ int main( )
     {
         ScannerSubscription scanSub;
         scanSub.instrument = "STK";
-        scanSub.locationCode = "STK.US";
+        scanSub.locationCode = "STK.NASDAQ";
         scanSub.scanCode = "TOP_PERC_GAIN";
         scanSub.numberOfRows = 5;
         scanSub.belowPrice = 15.0;
@@ -81,7 +81,6 @@ int main( )
 
         while (!EndOfScannerData)
             EC->checkMessages();
-
     }
 
     EC->eDisconnect();

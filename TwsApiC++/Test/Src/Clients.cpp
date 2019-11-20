@@ -88,7 +88,7 @@ int main( void )
 		for(int x = 0; x < NR_CONNECTIONS; x++ ) EC[x] = EClientL0::New( &MW );
 
 		bool connected = true;
-		for(int x = 0; x < NR_CONNECTIONS; x++ ) connected = connected && EC[x]->eConnect( "", 7496, 100+x );
+		for(int x = 0; x < NR_CONNECTIONS; x++ ) connected = connected && EC[x]->eConnect( "", 7497, 100+x );
 
 		PrintProcessId,printf( "ServerVersion = %d\n", EC[0]->serverVersion() );
 
@@ -125,7 +125,7 @@ int main( void )
 		for(int x = 0; x < NR_CONNECTIONS; x++ ) EC[x] = EClientL0::New( &MW );
 
 		bool connected = true;
-		for(int x = 0; x < NR_CONNECTIONS; x++ ) connected = connected && EC[x]->eConnect( "", 7496, 100+x );
+		for(int x = 0; x < NR_CONNECTIONS; x++ ) connected = connected && EC[x]->eConnect( "", 7497, 100+x );
 
 		PrintProcessId,printf( "ServerVersion = %d\n", EC[0]->serverVersion() );
 

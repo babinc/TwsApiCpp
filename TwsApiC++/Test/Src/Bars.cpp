@@ -135,7 +135,7 @@ int main( void )
 
 	printf( "ClientVersion = %d\n", EC->clientVersion() );
 
-	if( EC->eConnect( "", 7496, 100 ) )
+	if( EC->eConnect( "", 7497, 100 ) )
 	{
 
 		EC->reqMktData( 100, C, "", false );

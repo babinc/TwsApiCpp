@@ -244,7 +244,7 @@ int main( void )
 
 	TEST(0, EC->eDisconnect() );	// only for test purposes
 
-	if( TEST(0, EC->eConnect( "", 7496, 100 )) )
+	if( TEST(0, EC->eConnect( "", 7497, 100 )) )
 	{
 		PrintProcessId,printf( "ServerVersion = %d\n", EC->serverVersion() );
 
@@ -322,10 +322,10 @@ int main( void )
 
 
 		if( 130 == id)
-			TEST(id, EC->eConnect( "", 7496, 10 ) );
+			TEST(id, EC->eConnect( "", 7497, 10 ) );
 
 		if( 150 == id)
-			TEST(id, EC->eConnect( "", 7496, 10 ) );		// raises already connected error
+			TEST(id, EC->eConnect( "", 7497, 10 ) );		// raises already connected error
 
 		if( 190 == id )
 			TEST(id, 

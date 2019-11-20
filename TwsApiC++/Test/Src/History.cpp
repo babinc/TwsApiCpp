@@ -98,8 +98,8 @@ int main( int argc, const char* argv[] )
 			return 1;
 		}
 
-		C.symbol		= argv[1];
-		IBString EDT	= argv[2];
+		C.symbol = argv[1];
+		IBString EDT = argv[2];
 		if( EDT.size() != 8 )
 		{
 			printf	( "end-date should be 8 characters: YYYYMMDD\n"
@@ -112,21 +112,21 @@ int main( int argc, const char* argv[] )
 		EDTD = atoi( EDT.substr(6,2).data() );
 
 		CHECK_VAR( DurationHorizon, argv[4] ) // DurationHorizon
-			DS		= DurationStr(atoi(argv[3]), argv[4] );
+			DS = DurationStr(atoi(argv[3]), argv[4] );
 
 		IBString bss = argv[5]; bss = bss + " " + argv[6];
 		CHECK_VAR( BarSizeSetting, (const char*)bss )	// BarSizeSetting
-			BSS		= bss;
+			BSS = bss;
 
 		CHECK_VAR( WhatToShow, argv[7] )	// WhatToShow
-			WTS		= argv[7];
+			WTS = argv[7];
 	}
 
 
 	MyEWrapper	MW( false );
 	EClientL0*	EC = EClientL0::New( &MW );
 
-	if( EC->eConnect( "", 7496, 100 ) )
+	if( EC->eConnect( "", 7497, 100 ) )
 	{
 		EC->reqHistoricalData
 			( 20

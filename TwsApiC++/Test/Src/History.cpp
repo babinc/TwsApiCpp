@@ -25,13 +25,21 @@ class MyEWrapper: public EWrapperL0
 
 	virtual void error( const int id, const int errorCode, const IBString errorString )
 	{
-		fprintf( stderr, "Error for id=%d: %d = %s\n", id, errorCode, (const char*)errorString );
+	    if (id != -1) {
+            fprintf( stderr, "Error for id=%d: %d = %s\n", id, errorCode, (const char*)errorString );
+	    }
 		ErrorForRequest = (id > 0);
 		// id == -1 are 'system' messages, not for user requests
 		// as a test, set year to 2010 in the reqHistoricalData
 	}
 
-	virtual void historicalData( TickerId reqId, const IBString& date, double open, double high, double low, double close, int volume, int barCount, double WAP, int hasGaps )
+    void managedAccounts(const IBString& accountsList ) override {}
+
+    void connectionClosed() override {}
+
+    void nextValidId( OrderId orderId ) override {}
+
+	void historicalData( TickerId reqId, const IBString& date, double open, double high, double low, double close, int volume, int barCount, double WAP, int hasGaps ) override
 	{
 		if( IsEndOfHistoricalData(date) )
 		{
@@ -39,9 +47,8 @@ class MyEWrapper: public EWrapperL0
 			return;
 		}
 
-		fprintf( stdout, "%10s, %5.3f, %5.3f, %5.3f, %5.3f, %7d\n", (const char*)date, open, high, low, close, volume );
+		fprintf( stdout, "%10s,%5.3f,%5.3f,%5.3f,%5.3f,%d,%d\n", (const char*)date, open, high, low, close, volume, barCount);
 	}
-
 };
 
 
@@ -74,21 +81,21 @@ class MyEWrapper: public EWrapperL0
 int main( int argc, const char* argv[] )
 {
 	Contract			C;
-	C.symbol			= "MSFT";
+	C.symbol			= "ARAV";
 	C.secType			= *SecType::STK;		//"STK"
 	C.currency			= "USD";
 	C.exchange			= *Exchange::IB_SMART;	//"SMART";
-	C.primaryExchange	= *Exchange::AMEX;
+	C.primaryExchange	= *Exchange::NASDAQ;
 
 
-	int EDTY			= 2014;
-	int EDTM			= 8;
-	int EDTD			= 4;
-	IBString DS			= DurationStr(1, *DurationHorizon::Months);
-	IBString BSS		= *BarSizeSetting::_1_day;
+	int EDTY			= 2019;
+	int EDTM			= 11;
+	int EDTD			= 21;
+	IBString DS			= DurationStr(2, *DurationHorizon::Days);
+	IBString BSS		= *BarSizeSetting::_1_min;
 	IBString WTS		= *WhatToShow::TRADES;
 
-	if( argc > 1 )
+    if( argc > 1 )
 	{
 		if( argc < 8 )
 		{

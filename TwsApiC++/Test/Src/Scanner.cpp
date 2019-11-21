@@ -40,7 +40,7 @@ public:
 
     void scannerData( int reqId, int rank, const ContractDetails &contractDetails, const IBString &distance, const IBString &benchmark, const IBString &projection, const IBString &legsStr) override
     {
-        fprintf( stdout, "%s\n", contractDetails.summary.symbol.c_str());
+        fprintf( stdout, "%s,", contractDetails.summary.symbol.c_str());
     }
 
     void managedAccounts(const IBString& accountsList ) override
